@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Assets.Scripts.Util;
 
-namespace Assets.Scripts.Controllers
+namespace Assets.Scripts.Character.Controllers
 {
     class Player : Controllers.Controller
     {

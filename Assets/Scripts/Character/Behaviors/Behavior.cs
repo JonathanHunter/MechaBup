@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Behaviors
+namespace Assets.Scripts.Character.Behaviors
 {
     public abstract class Behavior : MonoBehaviour
     {
@@ -118,7 +118,7 @@ namespace Assets.Scripts.Behaviors
         protected Transform foot;
         /// <summary> Reference to the ghosting handler. </summary>
         [SerializeField]
-        private Misc.PlatformGhoster ghoster;
+        private PlatformGhoster ghoster;
         /// <summary> Used to force InAir to be true while jumping. </summary>
         private bool jumping;
         /// <summary> Reference to the driver for mechs. </summary>
@@ -127,10 +127,12 @@ namespace Assets.Scripts.Behaviors
         /// CHANGE TO PROPERTY
         [SerializeField]
         protected Controllers.Controller controller;
+        private Vector3 size;
 
         void Start()
         {
             jumping = false;
+            size = transform.localScale;
             Init();
         }
 
@@ -152,9 +154,9 @@ namespace Assets.Scripts.Behaviors
             if (!attack)
             {
                 if (anim.GetBool("InputLeft"))
-                    this.transform.localScale = new Vector3(-1, 1, 1);
+                    this.transform.localScale = new Vector3(-size.x, size.y, size.z);
                 else if (anim.GetBool("InputRight"))
-                    this.transform.localScale = new Vector3(1, 1, 1);
+                    this.transform.localScale = new Vector3(size.x, size.y, size.z);
             }
             if (idle)
             {

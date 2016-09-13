@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Controllers
+namespace Assets.Scripts.Character.Controllers
 {
     public class Controller : MonoBehaviour
     {

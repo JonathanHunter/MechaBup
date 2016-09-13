@@ -1,9 +1,9 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts.Behaviors
+namespace Assets.Scripts.Character.Behaviors
 {
-    class Mech : Behavior
+    class Bup : Behaviors.Behavior
     {
         [SerializeField]
         private float moveSpeed;
@@ -11,6 +11,28 @@ namespace Assets.Scripts.Behaviors
         private Vector3 jumpForce;
         private bool jumpNow;
         private bool moveNow;
+
+        private List<Mech> mechs;
+
+        void OnTriggerEnter2D(Collider2D col)
+        {
+            if(col.gameObject.layer == LayerMask.NameToLayer("Mech"))
+            {
+                Mech m = col.GetComponent<Mech>();
+                if (!mechs.Contains(m))
+                    mechs.Add(m);
+            }
+        }
+
+        void OnTriggerExit2D(Collider2D col)
+        {
+            if (col.gameObject.layer == LayerMask.NameToLayer("Mech"))
+            {
+                Mech m = col.GetComponent<Mech>();
+                if (mechs.Contains(m))
+                    mechs.Remove(m);
+            }
+        }
 
         protected override void FixedRun()
         {
@@ -21,7 +43,7 @@ namespace Assets.Scripts.Behaviors
                 rgbdy.AddForce(jumpForce, ForceMode2D.Impulse);
                 jumpNow = false;
             }
-            if (moveNow)
+            if(moveNow)
             {
                 rgbdy.velocity = new Vector3(anim.GetFloat("MoveSpeed") * moveSpeed, rgbdy.velocity.y);
                 moveNow = false;
@@ -32,6 +54,7 @@ namespace Assets.Scripts.Behaviors
         {
             jumpNow = false;
             moveNow = false;
+            mechs = new List<Mech>();
         }
 
         protected override void Idle()
@@ -58,10 +81,16 @@ namespace Assets.Scripts.Behaviors
 
         protected override void Control()
         {
-            controller.SetAnimator(driver);
-            driver.gameObject.GetComponent<Behavior>().SetController(controller);
-            SetController(null);
-            driver = null;
+            if (mechs.Count > 0)
+            {
+                mechs.Sort((x, y) => (Vector2.Distance(this.transform.position, x.transform.position).CompareTo(Vector2.Distance(this.transform.position, y.transform.position))));
+                Mech m = mechs[0];
+                controller.SetAnimator(m.GetComponent<Animator>());
+                m.driver = anim;
+                m.SetController(controller);
+                SetController(null);
+                mechs.Clear();
+            }       
         }
     }
 }

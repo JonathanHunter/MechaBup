@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Controllers.AI
+namespace Assets.Scripts.Character.Controllers.AI
 {
     class Test : Controller
     {

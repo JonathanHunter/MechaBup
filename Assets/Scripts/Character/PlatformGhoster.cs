@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Misc
+namespace Assets.Scripts.Character
 {
     public class PlatformGhoster : MonoBehaviour
     {
