@@ -9,6 +9,10 @@ namespace Assets.Scripts.Character.Behaviors
         private float moveSpeed;
         [SerializeField]
         private Vector3 jumpForce;
+        [SerializeField]
+        private GameObject attack;
+        [SerializeField]
+        private Transform barrel;
         private bool jumpNow;
         private bool moveNow;
 
@@ -68,7 +72,9 @@ namespace Assets.Scripts.Character.Behaviors
 
         protected override void Attack()
         {
-            //turn on collider or something
+            Attacks.Attack a = Instantiate(attack).GetComponent<Attacks.Attack>();
+            a.gameObject.transform.position = barrel.position;
+            a.direction = Util.Enum.Direction.None;
         }
 
         protected override void Jump()

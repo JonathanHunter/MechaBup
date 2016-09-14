@@ -689,6 +689,7 @@ GameObject:
   - 50: {fileID: 629547406}
   - 95: {fileID: 629547405}
   - 114: {fileID: 629547403}
+  - 114: {fileID: 629547404}
   m_Layer: 12
   m_Name: Mech
   m_TagString: Untagged
@@ -716,6 +717,20 @@ MonoBehaviour:
   controller: {fileID: 0}
   moveSpeed: 5
   jumpForce: {x: 0, y: 3, z: 0}
+--- !u!114 &629547404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 629547402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 509f0785c02742b44ade9c9b3f5385ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  owner: {fileID: 0}
+  damage: 0
 --- !u!95 &629547405
 Animator:
   serializedVersion: 3
@@ -1090,6 +1105,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1580392931}
+  - {fileID: 1657394075}
   m_Father: {fileID: 0}
   m_RootOrder: 5
 --- !u!114 &745779349
@@ -1112,6 +1128,8 @@ MonoBehaviour:
   controller: {fileID: 1969698359}
   moveSpeed: 5
   jumpForce: {x: 0, y: 3, z: 0}
+  attack: {fileID: 1000012694702970, guid: 757944e01ada35d40b5736d9cca79c72, type: 2}
+  barrel: {fileID: 1657394075}
 --- !u!95 &745779350
 Animator:
   serializedVersion: 3
@@ -2145,7 +2163,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1580392930}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84ee20d26b0b4c34692fa21bbd0c9509, type: 3}
+  m_Script: {fileID: 11500000, guid: 5cb358ec58ade9749b18025861af90f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   raycastEnabled: 0
@@ -2153,7 +2171,9 @@ MonoBehaviour:
   platformDetectors:
   - {fileID: 2067404456}
   - {fileID: 467771559}
-  layer: {}
+  layer:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!1 &1619616645
 GameObject:
   m_ObjectHideFlags: 0
@@ -2348,6 +2368,34 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!1 &1657394074
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1657394075}
+  m_Layer: 8
+  m_Name: Barrel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1657394075
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1657394074}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.94, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 745779348}
+  m_RootOrder: 1
 --- !u!1 &1818282490
 GameObject:
   m_ObjectHideFlags: 0
@@ -2388,15 +2436,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1818282490}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84ee20d26b0b4c34692fa21bbd0c9509, type: 3}
+  m_Script: {fileID: 11500000, guid: 5cb358ec58ade9749b18025861af90f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   raycastEnabled: 0
-  col: {fileID: 1818282493}
+  col: {fileID: 0}
   platformDetectors:
   - {fileID: 1368266148}
   - {fileID: 1474495190}
-  layer: {}
+  layer:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!61 &1818282493
 BoxCollider2D:
   m_ObjectHideFlags: 0

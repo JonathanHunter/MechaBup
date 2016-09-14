@@ -25,15 +25,20 @@ namespace Assets.Scripts.Character
 
         void OnCollisionEnter2D(Collision2D c)
         {
-            Hitbox hitbox = c.gameObject.GetComponent<Hitbox>();
-            if (hitbox == null)
-                Debug.LogError("unknown collision between " + gameObject.name + " and " + c.gameObject.name);
-            else
+            if (c.gameObject.layer != LayerMask.NameToLayer("Feet") && c.gameObject.layer != LayerMask.NameToLayer("Platform"))
             {
-                switch (hitbox.Type)
+                Hitbox hitbox = c.gameObject.GetComponent<Hitbox>();
+                if (hitbox == null)
+                    Debug.LogError("unknown collision between " + gameObject.name + " and " + c.gameObject.name);
+                else
                 {
-                    case Enum.HitboxType.Attack: AttackCollision(c, hitbox); break;
-                    case Enum.HitboxType.Character: CharacterCollision(c, hitbox); break;
+                    switch (hitbox.Type)
+                    {
+                        case Enum.HitboxType.Attack: AttackCollision(c, hitbox); break;
+                        case Enum.HitboxType.Character: CharacterCollision(c, hitbox); break;
+                        case Enum.HitboxType.Mech: MechCollision(c, hitbox); break;
+                        case Enum.HitboxType.Enemy: EnemyCollision(c, hitbox); break;
+                    }
                 }
             }
         }
@@ -45,8 +50,10 @@ namespace Assets.Scripts.Character
         {
             switch (type)
             {
-                case Enum.HitboxType.Attack: /* Notify attack class of collision */break;
+                case Enum.HitboxType.Attack: owner.GetComponent<Attacks.Attack>().NotifyCollision(c); break;
                 case Enum.HitboxType.Character: owner.GetComponent<Status>().NotifyCollision(c, h.damage); break;
+                case Enum.HitboxType.Mech: owner.GetComponent<Status>().NotifyCollision(c, h.damage); break;
+                case Enum.HitboxType.Enemy: owner.GetComponent<Status>().NotifyCollision(c, h.damage); break;
             }
         }
 
@@ -57,9 +64,40 @@ namespace Assets.Scripts.Character
         {
             switch (type)
             {
-                case Enum.HitboxType.Attack: /* Notify attack class of collision */break;
-                case Enum.HitboxType.Character: owner.GetComponent<Status>().NotifyCollision(c, h.damage); break;
+                case Enum.HitboxType.Attack: owner.GetComponent<Attacks.Attack>().NotifyCollision(c); break;
+                case Enum.HitboxType.Character: break;
+                case Enum.HitboxType.Mech: break;
+                case Enum.HitboxType.Enemy: break;
             }
         }
+
+        /// <summary> Handle what happens when this hitbox collides with a mech one. </summary>
+        /// <param name="c"> The original Collision2D object. </param>
+        /// <param name="h"> The other hitbox. </param>
+        private void MechCollision(Collision2D c, Hitbox h)
+        {
+            switch (type)
+            {
+                case Enum.HitboxType.Attack: owner.GetComponent<Attacks.Attack>().NotifyCollision(c); break;
+                case Enum.HitboxType.Character: break;
+                case Enum.HitboxType.Mech: break;
+                case Enum.HitboxType.Enemy: break;
+            }
+        }
+
+        /// <summary> Handle what happens when this hitbox collides with a enemy one. </summary>
+        /// <param name="c"> The original Collision2D object. </param>
+        /// <param name="h"> The other hitbox. </param>
+        private void EnemyCollision(Collision2D c, Hitbox h)
+        {
+            switch (type)
+            {
+                case Enum.HitboxType.Attack: owner.GetComponent<Attacks.Attack>().NotifyCollision(c); break;
+                case Enum.HitboxType.Character: owner.GetComponent<Status>().NotifyCollision(c, h.damage); break;
+                case Enum.HitboxType.Mech: break;
+                case Enum.HitboxType.Enemy: break;
+            }
+        }
+
     }
 }
